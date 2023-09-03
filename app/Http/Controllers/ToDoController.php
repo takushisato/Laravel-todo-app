@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ToDo\StoreRequest;
 use App\Models\ToDo;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,16 @@ class ToDoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        // 新規のToDoモデルを作成する
+        $toDo = new ToDo();
+
+        // タイトルをToDo設定する
+        $toDo->title = $request->get('title');
+
+        // データベースにデータを登録する
+        $toDo->save();
     }
 
     /**
