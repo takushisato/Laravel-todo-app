@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ToDoDetail\StoreRequest;
-use App\Models\ToDo;
+use App\Http\Requests\ToDoDetail\UpdateRequest;
 use App\Models\ToDoDetail;
-use Illuminate\Http\Request;
 
 class ToDoDetailController extends Controller
 {
@@ -61,9 +60,16 @@ class ToDoDetailController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UpdateRequest $request, string $id)
+{
+        // IDに紐づくToDoDetailモデルを取得
+        $ToDoDetail = ToDoDetail::find($id);
+
+        // タイトルをToDoDetailモデルに設定
+        $ToDoDetail->name = $request->get('name');
+
+        // ToDoDetailを更新
+        $ToDoDetail->save();
     }
 
     /**
@@ -71,6 +77,10 @@ class ToDoDetailController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // IDに紐づくToDoDetailモデルを取得
+        $ToDoDetail = ToDoDetail::find($id);
+
+        // データベースから削除する
+        $ToDoDetail->delete();
     }
 }
